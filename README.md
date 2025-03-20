@@ -129,11 +129,11 @@ Provides powerful project analysis tools:
 ;; Dialog with system prompt
 [:nexus/ask
  {:receiver :Gemini}
- {:system [:h1 "You are a quantum physics expert. Please answer questions in simple terms."]
+ [:system [:h1 "You are a quantum physics expert. Please answer questions in simple terms."]
            [:ul :ordered 
             [:li "You have experience in Clojure programming"]
             [:li "Your code skills are excellent, following the 'KISS' principle"]]]
-  :prompt "What is quantum entanglement?"}]
+  [:prompt "What is quantum entanglement?"]]
 ```
 
 ### Using as a Library
