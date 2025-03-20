@@ -449,9 +449,10 @@ BlackFog 已作为 Maven 库发布。如果您想贡献并发布新版本，请�
 
 ## 联系方式
 
-- 项目维护者：张先生
-- 邮箱：[example@example.com](mailto:example@example.com)
+- 项目维护者：neromous
+- 邮箱：[neromous@outlook.com](mailto:neromous@outlook.com)
 - Issues: [GitHub Issues](https://github.com/yourusername/blackfog/issues)
+- qq群: 873610818
 
 ---
 

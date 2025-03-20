@@ -466,9 +466,9 @@ This project is licensed under the [Apache License 2.0](LICENSE).
 ## Contact
 
 - Project Maintainer: Mr. Zhang
-- Email: [example@example.com](mailto:example@example.com)
-- Issues: [GitHub Issues](https://github.com/yourusername/blackfog/issues)
-
+- Email: [neromous@outlook.com](mailto:neromous@outlook.com)
+- Issues:[GitHub Issues](https://github.com/yourusername/blackfog/issues)
+- qq group: 873610818
 ---
 
 *BlackFog - Enhance your thinking, expand your cognitive boundaries* 
