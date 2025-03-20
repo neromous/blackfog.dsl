@@ -1,0 +1,66 @@
+* Ledger使用指南
+
+** 基本语法
+   Ledger使用简单的文本格式记录交易。每笔交易的基本格式如下：
+   
+   #+BEGIN_EXAMPLE
+   YYYY/MM/DD * 交易描述
+       账户名称                金额 货币单位  ; 注释
+       另一账户名称            金额 货币单位  ; 注释
+   #+END_EXAMPLE
+   
+   - 日期必须采用YYYY/MM/DD格式
+   - "*"表示已确认的交易，"!"表示待确认交易
+   - 账户名称和金额之间至少有两个空格
+   - 每笔交易必须平衡（借贷相等）
+
+** 常用账户结构
+   我们使用以下账户结构：
+   
+   - Assets: 资产（如现金、银行账户）
+   - Expenses: 支出（如食品、住房）
+   - Income: 收入（如工资、奖金）
+   - Liabilities: 负债（如信用卡、贷款）
+   - Equity: 权益（用于平衡账户）
+
+** 常用支出分类
+   - Expenses:Food - 食品支出
+     - Expenses:Food:Meat - 肉类
+     - Expenses:Food:Vegetables - 蔬菜
+     - Expenses:Food:Fruits - 水果
+     - Expenses:Food:Snacks - 零食
+   - Expenses:Housing - 住房支出
+   - Expenses:Transportation - 交通支出
+   - Expenses:Utilities - 水电气网
+   - Expenses:Healthcare - 医疗健康
+   - Expenses:Education - 教育支出
+     - Expenses:Education:Kids - 孩子教育
+   - Expenses:Entertainment - 娱乐支出
+
+** 日常记账示例
+   
+   #+BEGIN_EXAMPLE
+   ; 购物
+   2025/03/20 * 超市购物
+       Expenses:Food:Vegetables          30.00 CNY  ; 各种蔬菜
+       Expenses:Food:Fruits              25.00 CNY  ; 苹果和香蕉
+       Assets:Cash                      -55.00 CNY
+   
+   ; 收入
+   2025/03/25 * 工资收入
+       Assets:Bank:Checking           10000.00 CNY
+       Income:Salary                 -10000.00 CNY
+   
+   ; 转账
+   2025/03/26 * 转账到储蓄
+       Assets:Bank:Savings            5000.00 CNY
+       Assets:Bank:Checking          -5000.00 CNY
+   #+END_EXAMPLE
+
+** 常用命令
+   如果你安装了ledger命令行工具，可以使用以下命令：
+   
+   - 查看余额: `ledger -f ledger.dat balance`
+   - 查看特定账户: `ledger -f ledger.dat balance Expenses:Food`
+   - 查看交易记录: `ledger -f ledger.dat register`
+   - 按月汇总: `ledger -f ledger.dat --monthly register Expenses` 
