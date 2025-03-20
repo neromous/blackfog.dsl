@@ -1,0 +1,61 @@
+# 通用忽略规则
+*.log
+*.tmp
+*.edn
+.DS_Store
+.idea/
+.vscode/
+*.iml
+*.swp
+Thumbs.db
+
+# Clojure 特定
+target/
+.clj-kondo/
+.cpcache/
+.lein-repl-history
+.checkouts/
+pom.xml
+pom.xml.asc
+*.jar
+*.class
+
+# 项目特定路径
+resources/storage/
+resources/datasets/
+resources/presets/personas/*/state.edn
+data/
+workspace/
+
+# 依赖管理
+/.cpcache
+/.lsp
+/.nrepl-port
+
+# 测试相关
+coverage/
+test-results/
+
+# JVM 相关
+hs_err_pid*.log
+
+# 环境变量文件
+.env
+.env.local
+.env.development
+.env.test
+
+# 配置文件
+config.edn
+
+# 临时文件
+*.tmp
+*.tmp.*
+*.tmp.*.*
+*.tmp.*.*.*
+*.tmp.*.*.*.*
+*.tmp.*.*.*.*.*
+*.tmp.*.*.*.*.*.*
+
+# 其他
+.cursorrules
