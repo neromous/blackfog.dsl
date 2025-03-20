@@ -2,244 +2,260 @@
 
 BlackFog is a powerful framework providing a domain-specific language (DSL) for complex knowledge processing and LLM integration.
 
-## 项目概述
+## Project Overview
 
-BlackFog 是一个灵活、组合式的知识处理框架，它提供了一套声明式 DSL (领域特定语言)，用于表达和处理复杂的知识结构。BlackFog 通过向量化语法和组件化设计，简化了知识抽取、转换和交互的过程，特别适合于与大型语言模型 (LLM) 集成的应用场景。
+BlackFog is a flexible, composable knowledge processing framework that provides a declarative domain-specific language (DSL) for expressing and processing complex knowledge structures. Through vector-based syntax and component-based design, BlackFog simplifies the process of knowledge extraction, transformation, and interaction, making it especially suitable for integration with Large Language Models (LLMs).
 
-核心设计理念：
-- **声明式**：使用简洁明了的向量语法描述复杂操作
-- **组合式**：支持函数式组合，轻松构建复杂工作流
-- **可扩展**：模块化设计，易于扩展新功能和集成外部服务
+Core design principles:
+- **Declarative**: Use concise vector syntax to describe complex operations
+- **Composable**: Support functional composition for building complex workflows
+- **Extensible**: Modular design for easy extension of functionality and integration with external services
 
-### 项目目标
+### Project Goals
 
-BlackFog 旨在实现真正的响应式、声明式编程范式，帮助开发者构建更加健壮、灵活的知识处理系统：
+BlackFog aims to implement a truly reactive, declarative programming paradigm to help developers build more robust and flexible knowledge processing systems:
 
-1. **声明式编程的实践**：通过向量化DSL，让开发者专注于描述"做什么"而非"怎么做"，减少认知负担
-2. **响应式数据流**：利用 core.async 提供响应式编程支持，实现数据的异步处理和流式传输
-3. **函数式不变性**：遵循函数式编程理念，减少副作用，提高代码的可预测性和可测试性
-4. **大模型能力增强**：通过结构化知识表示和处理，增强大型语言模型的推理和生成能力
+1. **Declarative Programming in Practice**: Let developers focus on describing "what to do" rather than "how to do it" through vector-based DSL, reducing cognitive load
+2. **Reactive Data Flows**: Leverage core.async for reactive programming support, enabling asynchronous processing and streaming of data
+3. **Functional Immutability**: Follow functional programming principles, reduce side effects, and improve code predictability and testability
+4. **Enhanced LLM Capabilities**: Enhance reasoning and generation capabilities of large language models through structured knowledge representation
 
-这些目标使 BlackFog 成为一个理想的工具，特别适用于：
-- 知识密集型应用开发
-- 复杂数据流处理系统
-- LLM 赋能的智能应用
-- 需要灵活扩展的企业应用集成
+These goals make BlackFog an ideal tool for:
+- Knowledge-intensive application development
+- Complex data flow processing systems
+- LLM-powered intelligent applications
+- Enterprise applications requiring flexible extension
 
-## 系统架构
+## System Architecture
 
-BlackFog 系统由以下核心部分组成：
+BlackFog consists of the following core components:
 
-1. **DSL 核心** - 提供灵活的领域特定语言，用于表达和处理复杂的知识结构
-   - 基础元素系统（Element Registry）
-   - 组件系统（Component Registry）
-   - 渲染引擎（Render Engine）
-2. **LLM 集成** - 与大型语言模型的集成，提供智能分析和生成能力
-   - 多模型支持（OpenAI, Gemini等）
-   - 流式响应处理
-   - 对话历史管理
-3. **功能模块** - 提供丰富的功能模块，包括：
-   - 文件和文件夹操作
-   - 知识图谱管理
-   - HTTP 请求处理
-   - 媒体文件处理
+1. **DSL Core** - Provides a flexible domain-specific language for expressing and processing complex knowledge structures
+   - Element Registry System
+   - Component System
+   - Render Engine
+2. **LLM Integration** - Integration with large language models for intelligent analysis and generation
+   - Multi-model support (OpenAI, Gemini, etc.)
+   - Streaming response processing
+   - Conversation history management
+3. **Functional Modules** - Provides rich functional modules, including:
+   - File and folder operations
+   - Knowledge graph management
+   - HTTP request processing
+   - Media file processing
 
-## 核心功能
+## Core Features
 
-### DSL 系统
+### DSL System
 
-BlackFog 的 DSL 系统允许以声明式方式表达复杂操作，主要特点包括：
+BlackFog's DSL system allows expressing complex operations in a declarative manner, with key features including:
 
-- 基于向量的语法，易于阅读和编写
-- 支持组件化和函数式组合
-- 灵活的渲染和转换机制
+- Vector-based syntax that is easy to read and write
+- Support for component-based and functional composition
+- Flexible rendering and transformation mechanisms
 
 ```clojure
-;; DSL 示例 - HTTP 请求
+;; DSL Example - HTTP Request
 [:http/get "https://example.com/api/data"]
 
-;; DSL 示例 - 用户问答
+;; DSL Example - User Q&A
 [:nexus/ask
  {:receiver :default}
- "请解释量子计算的基本原理"]
+ "Please explain the basic principles of quantum computing"]
 ```
 
-### 文件和文件夹管理
+### File and Folder Management
 
-系统提供全面的文件和文件夹操作功能：
+The system provides comprehensive file and folder operation capabilities:
 
-- 文件读写、移动、删除
-- 文件夹结构分析和可视化
-- 智能文件内容分析和摘要
+- File reading, writing, moving, and deletion
+- Folder structure analysis and visualization
+- Intelligent file content analysis and summarization
 
 ```clojure
-;; 文件读取示例
+;; File reading example
 [:file/read-text "path/to/file.txt"]
 
-;; 文件夹结构分析
+;; Folder structure analysis
 [:folder/structure "path/to/project"]
 ```
 
-### 知识图谱
+### Knowledge Graph
 
-BlackFog 包含一个图数据库系统，用于构建和查询知识图谱：
+BlackFog includes a graph database system for building and querying knowledge graphs:
 
-- 创建和管理知识节点（短语）
-- 建立节点间的关系
-- 按领域组织和可视化知识
+- Create and manage knowledge nodes
+- Establish relationships between nodes
+- Organize and visualize knowledge by domain
 
 ```clojure
-;; 创建知识节点
-[:db/create-node {:phrase/title "量子计算"
-                  :phrase/content "量子计算是利用量子力学现象进行信息处理的计算方式"
-                  :phrase/domain ["物理学" "计算机科学"]
-                  :phrase.related/words ["量子位" "量子纠缠"]}]
+;; Create a knowledge node
+[:db/create-node {:phrase/title "Quantum Computing"
+                  :phrase/content "Quantum computing is a type of computation that uses quantum phenomena for information processing"
+                  :phrase/domain ["Physics" "Computer Science"]
+                  :phrase.related/words ["Qubit" "Quantum Entanglement"]}]
 ```
 
+### Project Analysis
 
-## 使用示例
+Provides powerful project analysis tools:
 
-### 基本 DSL 用法
+- Code quality assessment
+- Technical debt identification
+- Documentation quality analysis
+- Refactoring suggestions
 
 ```clojure
-;; 发送 HTTP 请求
-[:http/get "https://baike.baidu.com/item/量子计算"]
+;; Project health assessment
+[:proj/health-assessment "path/to/project"]
 
-;; 简单的用户问答
+;; Code quality analysis
+[:proj/code-quality "path/to/code"]
+```
+
+## Usage Examples
+
+### Basic DSL Usage
+
+```clojure
+;; HTTP Request
+[:http/get "https://en.wikipedia.org/wiki/Quantum_computing"]
+
+;; Simple user Q&A
 [:nexus/ask
  {:receiver :default}
- "请解释量子计算的基本原理"]
+ "Please explain the basic principles of quantum computing"]
 
-;; 带有系统提示的对话
+;; Dialog with system prompt
 [:nexus/ask
  {:receiver :Gemini}
- {:system [:h1 "你是一位量子物理学专家，请用通俗易懂的语言回答问题"]
+ {:system [:h1 "You are a quantum physics expert. Please answer questions in simple terms."]
            [:ul :ordered 
-            [:li "你拥有clojure编程经验"]
-            [:li "你的代码能力出众，遵守'KISS'原则"]]]
-  :prompt "什么是量子纠缠？"}]
+            [:li "You have experience in Clojure programming"]
+            [:li "Your code skills are excellent, following the 'KISS' principle"]]]
+  :prompt "What is quantum entanglement?"}]
 ```
 
-### 作为库使用
+### Using as a Library
 
-除了通过 DSL 向量语法使用 BlackFog 外，您还可以直接通过 Java/Clojure API 将其作为库引入您的项目中。以下是一些常见的使用场景：
+Besides using BlackFog through the DSL vector syntax, you can also incorporate it into your projects as a Java/Clojure API. Here are some common use cases:
 
-#### 简洁的函数式 API
+#### Concise Functional API
 
 ```clojure
 (require '[blackfog.core :as bf])
 
-;; 配置 LLM 服务
+;; Configure LLM service
 (bf/set-llm-config! :openai
   {:api/url "https://api.openai.com/v1"
    :api/sk "your-api-key-here"
    :api/model "gpt-4"
    :model/temperature 0.7})
 
-;; 向 LLM 发送请求并获取回复
-(bf/ask-llm :openai "解释量子计算的原理")
+;; Send a request to LLM and get a response
+(bf/ask-llm :openai "Explain the principles of quantum computing")
 
-;; 文件操作
+;; File operations
 (bf/read-file "path/to/file.txt")
 (bf/analyze-code "src/myapp/core.clj")
 
-;; 知识图谱操作
-(bf/create-node {:phrase/title "函数式编程"
-                 :phrase/content "一种编程范式..."
-                 :phrase/domain ["计算机科学" "编程范式"]})
+;; Knowledge graph operations
+(bf/create-node {:phrase/title "Functional Programming"
+                 :phrase/content "A programming paradigm..."
+                 :phrase/domain ["Computer Science" "Programming Paradigms"]})
 
-;; HTTP 请求
+;; HTTP requests
 (bf/http-get "https://api.example.com/data")
 ```
 
-#### 使用绑定和变量
+#### Using Bindings and Variables
 
-BlackFog 允许您在 DSL 表达式中使用变量绑定，这对于复用数据和构建动态表达式非常有用：
+BlackFog allows you to use variable bindings in DSL expressions, which is useful for reusing data and building dynamic expressions:
 
 ```clojure
 (require '[blackfog.core :as bf])
 
-;; 简单的变量绑定
-(def bindings {'username "张三"
-               'greeting "你好"})
+;; Simple variable binding
+(def bindings {'username "John"
+               'greeting "Hello"})
 
-;; 使用绑定渲染表达式
+;; Render expression with bindings
 (bf/render bindings [:nexus/ask
                      {:receiver :default}
-                     (str greeting ", " username "！欢迎使用 BlackFog！")])
+                     (str greeting ", " username "! Welcome to BlackFog!")])
 
-;; 复杂的数据结构绑定
-(def user-data {'user {:name "李四"
-                       :role "管理员"
-                       :projects ["项目A" "项目B"]}})
+;; Complex data structure binding
+(def user-data {'user {:name "Alice"
+                       :role "Administrator"
+                       :projects ["Project A" "Project B"]}})
 
-;; 使用复杂绑定
+;; Using complex bindings
 (bf/render user-data 
           [:db/create-node 
-           {:phrase/title (str (:name user) "的资料")
-            :phrase/content (str "角色: " (:role user))
+           {:phrase/title (str (:name user) "'s Profile")
+            :phrase/content (str "Role: " (:role user))
             :phrase/tags (:projects user)}])
 
-;; 自定义递归深度（适用于复杂表达式）
+;; Custom recursion depth (for complex expressions)
 (bf/render {} [:complex/nested-expression ...] 0 200)
 ```
 
-#### 扩展 DSL
+#### Extending the DSL
 
-您可以通过注册新的元素和组件来扩展 BlackFog 的 DSL 系统：
+You can extend BlackFog's DSL system by registering new elements and components:
 
 ```clojure
 (require '[blackfog.core :as bf])
 
-;; 注册一个基础元素
+;; Register a basic element
 (bf/register-element :my-app/greet
   (fn [name]
-    (str "你好，" name "！欢迎使用 BlackFog！")))
+    (str "Hello, " name "! Welcome to BlackFog!")))
 
-;; 注册一个组件（会经过二次渲染）
+;; Register a component (rendered twice)
 (bf/register-component :my-app/user-card
   (fn [user]
     [:div
-     [:h1 (str "用户: " (:name user))]
-     [:p (str "邮箱: " (:email user))]
-     [:p (str "角色: " (:role user))]]))
+     [:h1 (str "User: " (:name user))]
+     [:p (str "Email: " (:email user))]
+     [:p (str "Role: " (:role user))]]))
 
-;; 使用注册的元素
-(bf/render [:my-app/greet "张三"])
-;; => "你好，张三！欢迎使用 BlackFog！"
+;; Use the registered element
+(bf/render [:my-app/greet "John"])
+;; => "Hello, John! Welcome to BlackFog!"
 
-;; 使用注册的组件
-(bf/render [:my-app/user-card {:name "李四" :email "lisi@example.com" :role "管理员"}])
+;; Use the registered component
+(bf/render [:my-app/user-card {:name "Alice" :email "alice@example.com" :role "Administrator"}])
 ```
 
-#### Java 互操作
+#### Java Interoperability
 
-从 Java 中使用 BlackFog：
+Using BlackFog from Java:
 
 ```java
 import blackfog.core;
 
 public class BlackFogExample {
     public static void main(String[] args) {
-        // 初始化 BlackFog
+        // Initialize BlackFog
         blackfog.core.render(PersistentVector.create(Keyword.intern("http", "get"), "https://example.com"));
         
-        // 使用便捷 API
-        String result = (String) blackfog.core.ask_llm(Keyword.intern("openai"), "解释量子计算");
+        // Use the convenient API
+        String result = (String) blackfog.core.ask_llm(Keyword.intern("openai"), "Explain quantum computing");
         System.out.println(result);
     }
 }
 ```
 
-#### 流式 LLM 响应
+#### Streaming LLM Responses
 
-处理流式 LLM 响应：
+Processing streaming LLM responses:
 
 ```clojure
 (require '[blackfog.core :as bf]
          '[clojure.core.async :refer [go-loop <!]])
 
-(let [response-chan (bf/ask-llm-stream :openai "写一首关于编程的诗")]
+(let [response-chan (bf/ask-llm-stream :openai "Write a poem about programming")]
   (go-loop []
     (when-let [chunk (<! response-chan)]
       (when (:success chunk) 
@@ -250,39 +266,39 @@ public class BlackFogExample {
         (recur)))))
 ```
 
-有关更多示例和完整 API 文档，请参考 [API 文档](target/docs/index.html)。
+For more examples and complete API documentation, please refer to the [API Documentation](target/docs/index.html).
 
-### 文件分析
+### File Analysis
 
 ```clojure
-;; 文件摘要分析
+;; File summary analysis
 [:file/summary "path/to/file.txt"]
 
-;; 代码分析
+;; Code analysis
 [:file/analyze-code "src/blackfog/dsl/core.clj"]
 ```
 
-### 知识管理
+### Knowledge Management
 
 ```clojure
-;; 创建知识节点
-[:db/create-node {:phrase/title "量子计算"
-                  :phrase/content "量子计算是利用量子力学现象进行信息处理的计算方式"
-                  :phrase/domain ["物理学" "计算机科学"]
-                  :phrase.related/words ["量子位" "量子纠缠"]}]
+;; Create a knowledge node
+[:db/create-node {:phrase/title "Quantum Computing"
+                  :phrase/content "Quantum computing is a type of computation that uses quantum phenomena for information processing"
+                  :phrase/domain ["Physics" "Computer Science"]
+                  :phrase.related/words ["Qubit" "Quantum Entanglement"]}]
 
-;; 添加关系
-[:db/add-relation "量子计算" "经典计算" :related-to]
+;; Add a relationship
+[:db/add-relation "Quantum Computing" "Classical Computing" :related-to]
 
-;; 可视化领域知识
-[:db/visualize-domain "物理学"]
+;; Visualize domain knowledge
+[:db/visualize-domain "Physics"]
 ```
 
-## 安装与配置
+## Installation and Configuration
 
-### 依赖管理
+### Dependency Management
 
-BlackFog 可以通过多种方式安装和使用：
+BlackFog can be installed and used in various ways:
 
 #### Maven
 
@@ -312,41 +328,41 @@ io.github.yourusername/blackfog {:mvn/version "0.1.0"}
 [io.github.yourusername/blackfog "0.1.0"]
 ```
 
-### 环境要求
+### Requirements
 
 - JDK 11+
 - Clojure 1.11+
-- Leiningen 或 deps.edn
+- Leiningen or deps.edn
 
-### 快速开始
+### Quick Start
 
-1. 克隆仓库
+1. Clone the repository
    ```bash
    git clone https://github.com/yourusername/blackfog.git
    cd blackfog
    ```
 
-2. 安装依赖
+2. Install dependencies
    ```bash
    clojure -A:deps
    ```
 
-3. 启动 REPL
+3. Start the REPL
    ```bash
    clojure -M:repl
    ```
 
-4. 使用 REPL 运行示例
+4. Run examples in the REPL
    ```clojure
    (require '[blackfog.core :as bf])
    
-   ;; 运行简单的 DSL 示例
+   ;; Run a simple DSL example
    (bf/render [:http/get "https://example.com/api"])
    ```
 
-### 配置 LLM 服务
+### Configuring LLM Services
 
-在 `resources/config/services.edn` 文件中配置你的 LLM 服务：
+Configure your LLM services in the `resources/config/services.edn` file:
 
 ```clojure
 {:openai {:api/url "https://api.openai.com/v1"
@@ -360,99 +376,99 @@ io.github.yourusername/blackfog {:mvn/version "0.1.0"}
           :model/temperature 0.2}}
 ```
 
-## 开发规范
+## Development Standards
 
-BlackFog 项目遵循以下开发规范：
+BlackFog follows these development standards:
 
-1. **KISS 原则** - 保持简单直接的解决方案
-2. **纯函数优先** - 优先使用纯函数，确保相同输入产生相同输出
-3. **副作用分离** - 将副作用与业务逻辑分离
-4. **优雅性** - 使用恰当的命名和一致的代码风格
-5. **避免冗余** - 遵循 DRY 原则，提取共用逻辑
-6. **错误处理** - 使用显式的错误处理而非异常捕获
-7. **测试** - 为纯函数编写单元测试，使用基于属性的测试验证函数行为
+1. **KISS Principle** - Keep solutions simple and direct
+2. **Pure Functions First** - Prioritize pure functions that ensure the same input produces the same output
+3. **Separation of Side Effects** - Separate side effects from business logic
+4. **Elegance** - Use appropriate naming and consistent code style
+5. **Avoid Redundancy** - Follow the DRY principle and extract common logic
+6. **Error Handling** - Use explicit error handling rather than exception catching
+7. **Testing** - Write unit tests for pure functions, use property-based tests to verify function behavior
 
-## 扩展开发
+## Extension Development
 
-BlackFog 设计为可扩展的系统，你可以通过以下方式添加新功能：
+BlackFog is designed as an extensible system. You can add new functionality through:
 
-1. 添加新的 DSL 元素：
+1. Adding new DSL elements:
 
 ```clojure
 (require '[blackfog.core :as bf])
 
-;; 注册新的基础元素
+;; Register a new basic element
 (bf/register-element :my-namespace/my-function 
              (fn [& args] 
-               ;; 实现你的功能
+               ;; Implement your functionality
                ))
 ```
 
-2. 添加新的组件：
+2. Adding new components:
 
 ```clojure
 (require '[blackfog.core :as bf])
 
-;; 注册新的组件
+;; Register a new component
 (bf/register-component :my-namespace/my-component
                (fn [& args]
-                 ;; 返回一个新的 DSL 表达式
+                 ;; Return a new DSL expression
                  [:h1 "Generated Component"]))
 ```
 
-## 贡献指南
+## Contribution Guidelines
 
-欢迎对 BlackFog 项目做出贡献！请遵循以下步骤：
+Contributions to BlackFog are welcome! Please follow these steps:
 
-1. Fork 仓库
-2. 创建功能分支 (`git checkout -b feature/amazing-feature`)
-3. 提交更改 (`git commit -m 'Add some amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 创建 Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Create a Pull Request
 
-### 代码风格
+### Code Style
 
-- 遵循 Clojure 社区的代码风格指南
-- 使用有意义的函数和变量命名
-- 编写清晰的文档字符串
-- 为公共 API 添加示例
+- Follow Clojure community code style guidelines
+- Use meaningful function and variable names
+- Write clear documentation strings
+- Add examples for public APIs
 
-### 发布流程
+### Release Process
 
-BlackFog 已作为 Maven 库发布。如果您想贡献并发布新版本，请阅读 [Maven 部署指南](docs/maven-deploy-guide.md) 了解详细信息。
+BlackFog is published as a Maven library. If you want to contribute and publish a new version, please read the [Maven Deployment Guide](docs/maven-deploy-guide.md) for details.
 
-基本的发布流程如下：
+The basic release process is as follows:
 
-1. 准备好代码更改并确保测试通过
+1. Prepare code changes and ensure tests pass
    ```bash
    clojure -M:test
    ```
 
-2. 生成文档
+2. Generate documentation
    ```bash
    clojure -T:build docs
    ```
 
-3. 在本地安装并测试
+3. Install and test locally
    ```bash
    clojure -T:build install
    ```
 
-4. 发布新版本（需要正确的权限）
+4. Publish a new version (requires proper permissions)
    ```bash
    clojure -T:build deploy
    ```
 
-## 许可证
+## License
 
-本项目采用 [Apache License 2.0](LICENSE)。
+This project is licensed under the [Apache License 2.0](LICENSE).
 
-## 联系方式
+## Contact
 
-- 项目维护者：张先生
-- 邮箱：[example@example.com](mailto:example@example.com)
+- Project Maintainer: Mr. Zhang
+- Email: [example@example.com](mailto:example@example.com)
 - Issues: [GitHub Issues](https://github.com/yourusername/blackfog/issues)
 
 ---
 
-*BlackFog - 增强你的思维，扩展你的认知边界*
+*BlackFog - Enhance your thinking, expand your cognitive boundaries* 
