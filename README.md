@@ -1,4 +1,4 @@
-# BlackFog a reagent like prompting Framework
+# BlackFog.dsl a reagent like prompting Framework
 
 BlackFog is a powerful framework providing a domain-specific language (DSL) for complex knowledge processing and LLM integration.
 
