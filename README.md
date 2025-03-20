@@ -1,4 +1,4 @@
-# BlackFog.dsl a reagent like prompting Framework
+# BlackFog.dsl a reagent like Agent Framework
 
 BlackFog is a powerful framework providing a domain-specific language (DSL) for complex knowledge processing and LLM integration.
 
@@ -10,6 +10,82 @@ Core design principles:
 - **Declarative**: Use concise vector syntax to describe complex operations
 - **Composable**: Support functional composition for building complex workflows
 - **Extensible**: Modular design for easy extension of functionality and integration with external services
+
+## Agent Framework Architecture
+
+At its core, BlackFog functions as a powerful agent framework, enabling the construction of sophisticated agents through nested templating and composition. This approach allows you to build complex, hierarchical agent systems with specialized capabilities:
+
+### Composite Agent Pattern
+
+BlackFog's composable design allows for creating composite agents by nesting templates:
+
+- **Basic Agents**: Define core functionalities as simple elements
+- **Composite Agents**: Combine multiple basic agents into more complex structures
+- **Agent Specialization**: Create specialized agents for specific domains or tasks
+
+```clojure
+;; Example: Creating a specialized analysis agent through composition
+[:nexus/ask 
+ {:receiver :Gemini}  ;; Agent selection
+ [:system             ;; System prompt defines agent personality/capabilities
+  [:h1 "You are a specialized code analysis agent"]
+  [:p "Your expertise includes identifying architectural patterns and suggesting improvements."]]
+ [:user               ;; Nested analysis components
+  [:file/analyze-code "src/core/architecture.clj"]
+  [:proj/code-quality "src/core"]]]
+```
+
+### Multi-level Rendering
+
+The framework processes nested agent definitions through multi-level rendering:
+
+1. **Element Rendering**: Basic elements are rendered once
+2. **Component Rendering**: Components are rendered twice, first generating a new expression, then evaluating it
+3. **Recursive Depth Control**: Controls nesting depth to prevent infinite recursion
+
+This multi-level rendering approach enables:
+- Progressive refinement of agent behavior
+- Dynamic adaptation based on context
+- Structured reasoning across component boundaries
+
+### Agent Communication
+
+Agents can communicate and share context through:
+
+- **Shared Bindings**: Pass variables and context between components
+- **Message Passing**: Structured message exchange between agent components
+- **Reactive Processing**: Stream data between agent components for real-time processing
+
+```clojure
+;; Example: Agents collaborating through shared context
+(def bindings {'analysis-results (render [:proj/code-quality "src/core"])
+               'project-context {:name "BlackFog" :type "Framework"}})
+
+(render bindings 
+       [:nexus/ask 
+        {:receiver :default}
+        [:system "You are a refactoring specialist."]
+        [:user "Based on the following analysis, suggest improvements:"
+         [:p "Analysis results: " 'analysis-results]
+         [:p "Project context: " 'project-context]]])
+```
+
+### Specialized Agent Types
+
+BlackFog supports various agent types through its component system:
+
+- **Knowledge Processing Agents**: Extract, transform, and reason about information
+- **Task-specialized Agents**: Focus on specific operations like file analysis or code refactoring
+- **Orchestrator Agents**: Coordinate multiple agents to solve complex problems
+- **Multi-modal Agents**: Process and generate content across different formats (text, code, images)
+
+### Core Agent Framework Benefits
+
+- **Declarative Definition**: Define complex agent behaviors using intuitive vector syntax
+- **Progressive Enhancement**: Start simple and incrementally add capabilities
+- **Domain-Specific Specialization**: Create agents tailored to specific domains or tasks
+- **Reusable Components**: Leverage pre-built components to accelerate agent development
+- **Testing and Debugging**: Test agents at different levels of composition
 
 ### Project Goals
 
@@ -134,6 +210,76 @@ Provides powerful project analysis tools:
             [:li "You have experience in Clojure programming"]
             [:li "Your code skills are excellent, following the 'KISS' principle"]]]
   [:prompt "What is quantum entanglement?"]]
+```
+
+### Composite Agent Examples
+
+BlackFog enables the creation of sophisticated composite agents through nested templates:
+
+```clojure
+;; Research Agent with Multiple Capabilities
+[:nexus/ask
+ {:receiver :GPT4}
+ ;; Define agent personality and expertise
+ [:system
+  [:h1 "You are an AI research assistant with the following capabilities:"]
+  [:ul
+   [:li "Data analysis and visualization"]
+   [:li "Literature review and synthesis"]
+   [:li "Technical writing and documentation"]]]
+ 
+ ;; Integrate nested components for a complex task
+ [:user
+  [:h2 "Research Project: Quantum Computing Applications"]
+  [:p "Please analyze the following information:"]
+  
+  ;; File analysis component
+  [:file/analyze-code "src/quantum/algorithms.py"]
+  
+  ;; Web search integration
+  [:http/web "recent advancements in quantum error correction"]
+  
+  ;; Knowledge graph integration
+  [:db/domain-knowledge "Quantum Computing"]
+  
+  ;; Output formatting instructions
+  [:p "Format your response as a structured report with:"]
+  [:ul
+   [:li "Executive summary"]
+   [:li "Technical analysis"]
+   [:li "Future research directions"]]]]
+```
+
+```clojure
+;; Collaborative Agents Pattern
+(let [;; First, execute code analysis agent
+      code-analysis (render
+                      [:nexus/ask
+                       {:receiver :Gemini}
+                       [:system "You are a code analysis specialist."]
+                       [:user [:file/analyze-code "src/core/architecture.clj"]]])
+      
+      ;; Next, execute security analysis agent
+      security-analysis (render
+                          [:nexus/ask
+                           {:receiver :GPT4}
+                           [:system "You are a security audit specialist."]
+                           [:user [:file/analyze-code "src/core/security.clj"]]])
+      
+      ;; Create bindings with results from both specialized agents
+      bindings {'code-results code-analysis
+                'security-results security-analysis}]
+  
+  ;; Finally, execute summary agent that integrates both analyses
+  (render bindings
+          [:nexus/ask
+           {:receiver :Claude}
+           [:system "You are a technical project manager."]
+           [:user "Create a comprehensive improvement plan based on these analyses:"
+            [:h3 "Code Analysis Results"]
+            [:p 'code-results]
+            [:h3 "Security Analysis Results"]
+            [:p 'security-results]]]))
 ```
 
 ### Using as a Library

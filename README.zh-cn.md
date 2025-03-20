@@ -11,6 +11,82 @@ BlackFog 是一个灵活、组合式的知识处理框架，它提供了一套�
 - **组合式**：支持函数式组合，轻松构建复杂工作流
 - **可扩展**：模块化设计，易于扩展新功能和集成外部服务
 
+## Agent 框架架构
+
+BlackFog 的核心是一个强大的 Agent 框架，它通过嵌套模板和组合方式构建复杂的智能体系统。这种方法使您能够构建复杂、层次化的 Agent 系统，每个 Agent 都具有专门的能力：
+
+### 复合 Agent 模式
+
+BlackFog 的组合式设计允许通过嵌套模板创建复合 Agent：
+
+- **基础 Agent**：定义作为简单元素的核心功能
+- **复合 Agent**：将多个基础 Agent 组合成更复杂的结构
+- **Agent 专业化**：创建针对特定领域或任务的专业化 Agent
+
+```clojure
+;; 示例：通过组合创建专业代码分析 Agent
+[:nexus/ask 
+ {:receiver :Gemini}  ;; Agent 选择
+ [:system             ;; 系统提示定义 Agent 个性/能力
+  [:h1 "你是一位专业的代码分析 Agent"]
+  [:p "你的专长包括识别架构模式和提出改进建议。"]]
+ [:user               ;; 嵌套分析组件
+  [:file/analyze-code "src/core/architecture.clj"]
+  [:proj/code-quality "src/core"]]]
+```
+
+### 多级渲染
+
+框架通过多级渲染处理嵌套的 Agent 定义：
+
+1. **元素渲染**：基础元素只渲染一次
+2. **组件渲染**：组件会渲染两次，首先生成新表达式，然后计算该表达式
+3. **递归深度控制**：控制嵌套深度以防止无限递归
+
+这种多级渲染方法实现了：
+- Agent 行为的渐进式细化
+- 基于上下文的动态适应
+- 跨组件边界的结构化推理
+
+### Agent 通信
+
+Agent 可以通过以下方式进行通信和共享上下文：
+
+- **共享绑定**：在组件之间传递变量和上下文
+- **消息传递**：Agent 组件之间的结构化消息交换
+- **响应式处理**：Agent 组件之间流式数据传输，实现实时处理
+
+```clojure
+;; 示例：Agent 通过共享上下文协作
+(def bindings {'analysis-results (render [:proj/code-quality "src/core"])
+               'project-context {:name "BlackFog" :type "Framework"}})
+
+(render bindings 
+       [:nexus/ask 
+        {:receiver :default}
+        [:system "你是一位重构专家。"]
+        [:user "基于以下分析，提出改进建议："
+         [:p "分析结果: " 'analysis-results]
+         [:p "项目上下文: " 'project-context]]])
+```
+
+### 专业化 Agent 类型
+
+BlackFog 通过其组件系统支持各种 Agent 类型：
+
+- **知识处理 Agent**：提取、转换和推理信息
+- **任务专业化 Agent**：专注于特定操作，如文件分析或代码重构
+- **协调者 Agent**：协调多个 Agent 解决复杂问题
+- **多模态 Agent**：处理和生成不同格式（文本、代码、图像）的内容
+
+### Agent 框架核心优势
+
+- **声明式定义**：使用直观的向量语法定义复杂的 Agent 行为
+- **渐进式增强**：从简单开始，逐步添加能力
+- **领域特定专业化**：创建针对特定领域或任务定制的 Agent
+- **可重用组件**：利用预构建组件加速 Agent 开发
+- **测试和调试**：在不同组合层级测试 Agent
+
 ### 项目目标
 
 BlackFog 旨在实现真正的响应式、声明式编程范式，帮助开发者构建更加健壮、灵活的知识处理系统：
@@ -118,6 +194,76 @@ BlackFog 包含一个图数据库系统，用于构建和查询知识图谱：
             [:li "你拥有clojure编程经验"]
             [:li "你的代码能力出众，遵守'KISS'原则"]]]
   :prompt "什么是量子纠缠？"}]
+```
+
+### 复合 Agent 示例
+
+BlackFog 支持通过嵌套模板创建复杂的复合 Agent：
+
+```clojure
+;; 研究 Agent 与多种能力
+[:nexus/ask
+ {:receiver :GPT4}
+ ;; 定义 Agent 个性和专长
+ [:system
+  [:h1 "你是一位具有以下能力的 AI 研究助手："]
+  [:ul
+   [:li "数据分析和可视化"]
+   [:li "文献综述和综合"]
+   [:li "技术写作和文档编写"]]]
+ 
+ ;; 集成嵌套组件完成复杂任务
+ [:user
+  [:h2 "研究项目：量子计算应用"]
+  [:p "请分析以下信息："]
+  
+  ;; 文件分析组件
+  [:file/analyze-code "src/quantum/algorithms.py"]
+  
+  ;; 网络搜索集成
+  [:http/web "量子纠错的最新进展"]
+  
+  ;; 知识图谱集成
+  [:db/domain-knowledge "量子计算"]
+  
+  ;; 输出格式说明
+  [:p "请将你的回应格式化为结构化报告，包含："]
+  [:ul
+   [:li "执行摘要"]
+   [:li "技术分析"]
+   [:li "未来研究方向"]]]]
+```
+
+```clojure
+;; 协作 Agent 模式
+(let [;; 首先，执行代码分析 Agent
+      code-analysis (render
+                      [:nexus/ask
+                       {:receiver :Gemini}
+                       [:system "你是一位代码分析专家。"]
+                       [:user [:file/analyze-code "src/core/architecture.clj"]]])
+      
+      ;; 然后，执行安全分析 Agent
+      security-analysis (render
+                          [:nexus/ask
+                           {:receiver :GPT4}
+                           [:system "你是一位安全审计专家。"]
+                           [:user [:file/analyze-code "src/core/security.clj"]]])
+      
+      ;; 创建包含两个专业 Agent 结果的绑定
+      bindings {'code-results code-analysis
+                'security-results security-analysis}]
+  
+  ;; 最后，执行一个整合两种分析的总结 Agent
+  (render bindings
+          [:nexus/ask
+           {:receiver :Claude}
+           [:system "你是一位技术项目经理。"]
+           [:user "基于这些分析创建一个综合改进计划："
+            [:h3 "代码分析结果"]
+            [:p 'code-results]
+            [:h3 "安全分析结果"]
+            [:p 'security-results]]]))
 ```
 
 ### 作为库使用
